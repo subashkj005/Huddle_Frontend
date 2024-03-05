@@ -60,7 +60,7 @@ function MatchListing({ setModalOpen, setUser }) {
         {matches?.length !== 0 ? (
           matches.map((match, idx) => {
             const matchExpiresAt = new Date(match.expires_at); 
-            if (matchExpiresAt >= currentTime) {
+            if (matchExpiresAt <= currentTime) {
               return (
                 <div className={`p-2`} key={idx}>
                   <Link to={`/user/chat/${match.chatroom_name}`}>

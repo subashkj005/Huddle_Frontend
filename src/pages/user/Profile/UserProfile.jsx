@@ -18,6 +18,8 @@ import { useSelector } from "react-redux";
 import validateImage from "../../../utils/fileManagement/imageValidations";
 import ProfilePictureModal from "../../../components/modals/ProfilePictureModal";
 import { UserPictureContext } from "../../../context/UserPictureContext";
+import axios from "axios";
+
 
 function UserProfile() {
   const { showLoading, hideLoading } = useContext(LoadingContext);
@@ -178,10 +180,14 @@ function UserProfile() {
 
     showLoading();
 
-    const promise = axiosInstance.post(
-      `http://localhost:7614/users/profileupdate/?user_id=${user_id}`,
+    const promise = axios.post(
+      `http://34.31.212.173:7614/users/profileupdate/?user_id=${user_id}`,
       data
     );
+    // const promise = axiosInstance.post(
+    //   `${USERS_URL}/profileupdate/?user_id=${user_id}`,
+    //   data
+    // );
     
     promise
     .then((res)=>{
@@ -732,7 +738,7 @@ function UserProfile() {
                 </div>
 
                 {prompts.map((item, index) => (
-                  <div className="flex border border-slate-300 rounded-md my-3">
+                  <div key={index} className="flex border border-slate-300 rounded-md my-3">
                     {isPromptEdit && editingPromptId === index ? (
                       <input
                         className="w-full bg-[#da7272] border-none rounded-md my-4 p-2 ml-2 text-sm"
