@@ -4,7 +4,7 @@ import img from "../../../assets/front-image.jpg";
 import logo from "../../../assets/images/logo_png_hd-cropped.png";
 import { Link, useNavigate } from "react-router-dom";
 import { Alert } from "@mui/material";
-import { USERS_PUBLIC_URL } from "../../../constants/urls";
+import { USERS_PUBLIC_URL, USERS_URL, CHAT_URL, POST_IMAGE_URL } from "../../../constants/urls";
 import axiosInstance from "../../../axios/axiosInstance";
 import { LoadingContext } from "../../../context/LoadingContext";
 import { useDispatch } from "react-redux";
@@ -60,6 +60,9 @@ function LoginPage() {
   };
 
   console.log('USERS_PUBLIC_URL = ',USERS_PUBLIC_URL)
+  console.log('USERS_PUBLIC_URL = ',USERS_URL)
+  console.log('USERS_PUBLIC_URL = ',CHAT_URL)
+  console.log('USERS_PUBLIC_URL = ',POST_IMAGE_URL)
 
   return (
     <div className="container">
