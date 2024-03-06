@@ -153,7 +153,7 @@ function Display() {
 
         const delta = Math.sign(event.deltaY);
         counter += delta;
-        counter = Math.max(0, Math.min(counter, contentSlides.length - 1));
+        counter = Math.max(0, Math.min(counter, contentSlides?.length - 1));
         slideImage();
       }
     });
@@ -174,7 +174,7 @@ function Display() {
         {/* Loading screen when fetching users */}
         <div
           className={`loading-div z-20 w-full h-full relative ${
-            data.length ? "hidden" : fetchCompleted ? "hidden" : "" 
+            data?.length ? "hidden" : fetchCompleted ? "hidden" : "" 
           }`}
         >
           <div className="rhombus absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
@@ -191,7 +191,7 @@ function Display() {
         {/* Image for showing the reached limit */}
         <div
           className={`loading-div z-20 w-full h-full relative ${
-            data.length ? "hidden" : ""
+            data?.length ? "hidden" : ""
           }`}
         >
           <img

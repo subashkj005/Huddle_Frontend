@@ -29,6 +29,8 @@ import UserDetails from "./components/admin/main/soloUser/UserDetails"
 import ReportList from "./components/admin/main/reports/ReportList";
 import PostReportList from "./components/admin/main/reports/PostReportList";
 import PostReportDetails from "./components/admin/main/reports/PostReportDetails";
+import HandleError from "./utils/route_auth/HandleError";
+import Err404Page from "./pages/Err404/Err404Page";
 
 function App() {
   return (
@@ -41,6 +43,7 @@ function App() {
           <Toaster position="bottom-center" reverseOrder={false} />
           <Router>
             <Routes>
+              <Route indx path="handleerror" element={<HandleError />} />
               <Route path="/" element={<InitialAuth />}>
                 {/* User Auth*/}
                 <Route index element={<LoginPage />} />
@@ -75,6 +78,7 @@ function App() {
                   <Route path="reports/posts/:reportId" element={<PostReportDetails />} />
                 </Route>
               </Route>
+              <Route path="*" element={<Err404Page />} />
             </Routes>
           </Router>
         </div>
