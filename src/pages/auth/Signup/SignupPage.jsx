@@ -5,7 +5,7 @@ import logo from "../../../assets/images/logo_png_hd-cropped.png";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { Alert } from "@mui/material";
-import { PUBLIC_URL } from "../../../constants/urls";
+import { USERS_PUBLIC_URL } from "../../../constants/urls";
 import { isPasswordStrongEnough } from "../../../utils/auth/passwordStrength";
 import HashLoadingScreen from "../../../components/loadingScreen/HashLoadingScreen";
 import axiosInstance from "../../../axios/axiosInstance";
@@ -53,7 +53,7 @@ function SignupPage() {
     showLoading();
 
     axiosInstance
-      .post(`${PUBLIC_URL}/signup`, formData)
+      .post(`${USERS_PUBLIC_URL}/signup`, formData)
       .then((res) => {
         console.log("login success", res);
 

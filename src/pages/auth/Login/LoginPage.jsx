@@ -4,7 +4,7 @@ import img from "../../../assets/front-image.jpg";
 import logo from "../../../assets/images/logo_png_hd-cropped.png";
 import { Link, useNavigate } from "react-router-dom";
 import { Alert } from "@mui/material";
-import { PUBLIC_URL } from "../../../constants/urls";
+import { USERS_PUBLIC_URL } from "../../../constants/urls";
 import axiosInstance from "../../../axios/axiosInstance";
 import { LoadingContext } from "../../../context/LoadingContext";
 import { useDispatch } from "react-redux";
@@ -36,7 +36,7 @@ function LoginPage() {
 
     showLoading();
     axiosInstance
-      .post(`${PUBLIC_URL}/login`, data)
+      .post(`${USERS_PUBLIC_URL}/login`, data)
       .then((res) => {
         if (res.status == "200") {
           dispatch(loggedIn(res.data.user));
@@ -58,6 +58,8 @@ function LoginPage() {
 
     setErrorMessage("");
   };
+
+  console.log('USERS_PUBLIC_URL = ',USERS_PUBLIC_URL)
 
   return (
     <div className="container">

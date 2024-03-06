@@ -4,7 +4,7 @@ import img from '../../../assets/front-image.jpg'
 import logo from '../../../assets/images/logo_png_hd-cropped.png'
 import { Alert } from '@mui/material';
 import axios from 'axios';
-import { PUBLIC_URL } from '../../../constants/urls'
+import { USERS_PUBLIC_URL } from '../../../constants/urls'
 import { LoadingContext } from "../../../context/LoadingContext";
 import {toast as hottoast} from 'react-hot-toast';
 
@@ -68,7 +68,7 @@ function OTPVerification() {
     showLoading();
 
     axios
-      .post(`${PUBLIC_URL}/otp_confirm`, data)
+      .post(`${USERS_PUBLIC_URL}/otp_confirm`, data)
       .then((res) => {
         console.log('otp success', res);
         setErrorMessage(res.data.message);
