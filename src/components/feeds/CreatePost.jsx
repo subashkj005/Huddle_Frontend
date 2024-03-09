@@ -10,17 +10,37 @@ import { POST_URL } from "../../constants/urls";
 import { UserPictureContext } from "../../context/UserPictureContext";
 
 function CreatePost({posts, setPosts}) {
+
   const [image, setImage] = useState(null);
+  const [imagefile, setImageFile] = useState(null);
   const [content, setContent] = useState("");
   const [heading, setHeading] = useState("");
   const [headingTrigger, setHeadingTrigger] = useState(false);
   const { userImage, name } = useContext(UserPictureContext)
-
   const userId = useSelector((state) => state.logUser.user.id);
 
-  const handleImage = (e) => {
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        console.error('Error while converting to base64:', error);
+        hottoast.error('Invalid Image');
+        reject(error);
+      };
+    });
+  };
+
+  const handleImage = async (e) => {
     const file = e.target.files[0];
-    setImage(file);
+    if (file) {
+      setImage(file)
+    }
+    const base64 = await convertToBase64(file)
+    setImageFile(base64);
   };
 
   const handleContent = (e) => {
@@ -40,11 +60,28 @@ function CreatePost({posts, setPosts}) {
   };
 
   const handleCreatePost = () => {
-    const formData = new FormData();
-    formData.append("user_id", userId);
-    formData.append("content", content);
-    formData.append("heading", heading);
-    formData.append("image", image);
+
+    const data = {
+      "user_id":userId,
+      "content": content,
+      "heading": heading,
+      "image": imagefile
+    }
+
+
+
+
+    // const formData = new FormData();
+    // formData.append("user_id", userId);
+    // formData.append("content", content);
+    // formData.append("heading", heading);
+    // formData.append("image", image);
+
+
+
+
+
+
 
     // console.log('data got from formdata = ', formData.get('image'))
     // console.log('image = ', image)
@@ -55,16 +92,13 @@ function CreatePost({posts, setPosts}) {
     // console.log(POST_URL, 'POST URL')
 
     axiosInstance
-    .post(`${POST_URL}/create_post`, formData, {
-      headers: {
-          'Content-Type': 'multipart/form-data'
-      }
-  })
+    .post(`${POST_URL}/create_post`, data)
       .then((res) => {
         // console.log("create post res = ", res);
         hottoast.success("Tada..! new post created")
         setPosts([res?.data?.created_post, ...posts])
         setImage(null)
+        setImageFile(null)
         setContent("")
         setHeading("")
         setHeadingTrigger(false)

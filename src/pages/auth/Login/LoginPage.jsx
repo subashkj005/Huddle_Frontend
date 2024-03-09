@@ -59,11 +59,6 @@ function LoginPage() {
     setErrorMessage("");
   };
 
-  console.log('USERS_PUBLIC_URL = ',USERS_PUBLIC_URL)
-  console.log('USERS_PUBLIC_URL = ',USERS_URL)
-  console.log('USERS_PUBLIC_URL = ',CHAT_URL)
-  console.log('USERS_PUBLIC_URL = ',POST_IMAGE_URL)
-
   return (
     <div className="container">
       <div className="left-sec">

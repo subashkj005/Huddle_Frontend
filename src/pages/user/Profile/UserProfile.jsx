@@ -181,7 +181,7 @@ function UserProfile() {
     showLoading();
 
     const promise = axios.post(
-      `http://34.31.212.173:7614/users/profileupdate/?user_id=${user_id}`,
+      `https://nexostore.online/users/profileupdate/?user_id=${user_id}`,
       data
     );
     // const promise = axiosInstance.post(

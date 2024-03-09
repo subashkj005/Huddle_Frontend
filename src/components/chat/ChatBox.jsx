@@ -7,10 +7,12 @@ import { CHAT_URL, IMAGE_URL } from "../../constants/urls";
 import avatar from "../../assets/images/avatar.jpg";
 import axiosInstance from "../../axios/axiosInstance";
 import ChatHeader from "./ChatHeader";
+import ChatLoadingScreen from "./ChatLoadingScreen";
 
 const ChatBox = ({
   messages,
   setMessages,
+  messageLoading,
   chatDetails,
   chatName,
   user,
@@ -74,6 +76,7 @@ const ChatBox = ({
 
   return (
     <div className="chatApp__conv">
+      <ChatLoadingScreen messageLoading={messageLoading}/>
       <ChatHeader
       recipient={recipient}
        recipientAvatar={recipientAvatar} 

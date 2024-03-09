@@ -13,6 +13,7 @@ function Chat() {
   const { chatName } = useParams();
   const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState({});
+  const [messageLoading, setMessageLoading] = useState(false);
   const socket = useRef();
   const user = useSelector((state) => state.logUser.user);
   const chatDetails = useSelector((state) => selectMatchById(state, chatName));
@@ -25,6 +26,7 @@ function Chat() {
   useEffect(() => {
     socket.current = io(CHAT_SOCKET);
     console.log('getting messages')
+    setMessageLoading(true)
     axiosInstance
       .get(`${CHAT_URL}/get_messages/${chatName}`)
       .then((res) => {
@@ -34,7 +36,9 @@ function Chat() {
       .catch((err) => {
         console.error("chat err ==>", err);
       })
-      .finally(() => {});
+      .finally(() => {
+        setMessageLoading(false)
+      });
 
 
     socket.current.on("connect", () => {
@@ -66,13 +70,16 @@ function Chat() {
         socket.current.emit("leave_room", { room_name: chatName, user_id: user?.id });
         socket.current.disconnect();
       }
+      setMessages([])
     };
+
   }, [chatName, user.id, setMessages]);
 
   return (
     <>
       <ChatBox
         messages={messages}
+        messageLoading={messageLoading}
         setMessages={setMessages}
         chatDetails={chatDetails}
         chatName={chatName}
