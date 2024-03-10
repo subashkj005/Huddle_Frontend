@@ -11,12 +11,12 @@ import {NextUIProvider} from "@nextui-org/react";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    
+    <React.StrictMode>
       <NextUIProvider>
         <main className="light">
           <App />
         </main>
       </NextUIProvider>
-    
+    </React.StrictMode>
   </Provider>
 );
