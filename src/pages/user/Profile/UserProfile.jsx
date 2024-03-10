@@ -180,14 +180,14 @@ function UserProfile() {
 
     showLoading();
     
-    // const promise = axios.post(
-    //   `https://nexostore.online/users/profileupdate/?user_id=${user_id}`,
-    //   data
-    // );
     const promise = axiosInstance.post(
-      `${USERS_URL}/profileupdate/?user_id=${user_id}`,
+      `https://nexostore.online/users/profileupdate/?user_id=${user_id}`,
       data
     );
+    // const promise = axiosInstance.post(
+    //   `${USERS_URL}/profileupdate/?user_id=${user_id}`,
+    //   data
+    // );
     
     promise
     .then((res)=>{
