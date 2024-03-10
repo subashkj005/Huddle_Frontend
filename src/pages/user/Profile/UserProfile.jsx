@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import ImageUpload from "../../../components/imageUpload/ImageUpload";
 import { createFormData } from "../../../utils/fileManagement/fileUpload";
 import axiosInstance from "../../../axios/axiosInstance";
-import { IMAGE_URL, USER_SOCKET } from "../../../constants/urls";
+import { IMAGE_URL, USERS_URL, USER_SOCKET } from "../../../constants/urls";
 import { toast } from "react-toastify";
 import { toast as hottoast } from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
@@ -185,7 +185,7 @@ function UserProfile() {
     //   data
     // );
     const promise = axiosInstance.post(
-      `${USER_SOCKET}/profileupdate/?user_id=${user_id}`,
+      `${USER_SOCKET}/users/profileupdate/?user_id=${user_id}`,
       data
     );
     
