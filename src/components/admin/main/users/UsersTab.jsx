@@ -132,10 +132,10 @@ function UsersTab() {
         </table>
       </div>
       {!skelton && users.length === 0 && (
-            <div className="flex justify-center items-center w-full h-full p-10">
-              <h1 className="font-medium text-xl">No reports </h1>
-            </div>
-          )}
+        <div className="flex justify-center items-center w-full h-full p-10">
+          <h1 className="font-medium text-xl">No reports </h1>
+        </div>
+      )}
     </>
   );
 }

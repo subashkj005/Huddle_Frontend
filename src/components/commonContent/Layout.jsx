@@ -8,14 +8,21 @@ import { useSelector } from "react-redux";
 function Layout() {
 
   const userId = useSelector((state) => state.logUser.user.id);
+  
   useEffect(() => {
+
     const socket = io(USER_SOCKET);
+
+    socket.on("error", (error) => {
+      console.log('NOTIFICATION SOCKET CONNECTION ERROR', error);
+    });
 
     socket.on("connect", async () => {
       console.log('NOTIFICATION SOCKET CONNECTED')
       socket.emit("add_user_connection", { user_id: userId });
       console.log('NOTIFICATION USER ADDED')
     });
+
   }, []);
 
   return (

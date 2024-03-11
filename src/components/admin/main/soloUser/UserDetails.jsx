@@ -1,14 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../../../axios/axiosInstance";
 import { Avatar, Button } from "@nextui-org/react";
+import { toast as hottoast } from "react-hot-toast";
 import { ADMIN_USER_ACCESS } from "../../../../constants/admin_urls";
 import avatar from "../../../../assets/images/avatar.jpg";
 import { IMAGE_URL } from "../../../../constants/urls";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+} from "@nextui-org/react";
 
 function UserDetails() {
   const { userId } = useParams();
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   useEffect(() => {
     axiosInstance
@@ -21,6 +32,28 @@ function UserDetails() {
         console.log("error at getting user details : ", err);
       });
   }, []);
+
+  const showUserReports = () => {
+    navigate(`/admin/user/reports/${userId}`);
+  };
+
+  const updateUserActive = () => {
+    axiosInstance.post(`${ADMIN_USER_ACCESS}/update_active/${userId}`)
+    .then((res) => {
+      if (res?.status===200){
+        hottoast.success("Status Updated")
+        setUser({...user, is_active : !user.is_active})
+       
+      }
+    })
+    .catch((err) => {
+      hottoast.error("Unable to update user status")
+      console.log("error at getting user details : ", err);
+    })
+    .finally(()=>{
+
+    })
+  }
 
   return (
     <>
@@ -55,8 +88,19 @@ function UserDetails() {
                 </p>
               </div>
             </div>
-            <div>
-              <Button>Reports</Button>
+            <div className="flex flex-col items-stretch">
+              <Button onClick={showUserReports} className="mb-4">
+                Reports
+              </Button>
+              {!user.is_active ? (
+                <button className="btn btn-solid-success" onClick={onOpen}>
+                  Activate User
+                </button>
+              ) : (
+                <button className="btn btn-solid-error" onClick={onOpen}>
+                  Block User
+                </button>
+              )}
             </div>
           </div>
           <div className="border border-gray-200 p-4 rounded-lg shadow-md mt-4 flex justify-evenly">
@@ -87,6 +131,31 @@ function UserDetails() {
           <div className="h-16 p-2 bg-gray-200 mt-3 mx-4 mb-6 rounded"></div>
         </div>
       )}
+
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1"></ModalHeader>
+              <ModalBody>
+                <p>
+                  {user.is_active
+                    ? "Are you sure want to BLOCK user ?"
+                    : "Are you sure want to UNBLOCK the user ?"}
+                </p>
+              </ModalBody>
+              <ModalFooter>
+                <Button color={user.is_active ? "danger": "default"} variant="bordered" onPress={onClose}>
+                  Close
+                </Button>
+                <Button color={user.is_active ? "danger": "success"} variant="solid" onClick={updateUserActive} onPress={onClose}>
+                  <p>{user.is_active ? "Block" : "Unblock"}</p>
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </>
   );
 }

@@ -31,6 +31,7 @@ import PostReportList from "./components/admin/main/reports/PostReportList";
 import PostReportDetails from "./components/admin/main/reports/PostReportDetails";
 import HandleError from "./utils/route_auth/HandleError";
 import Err404Page from "./pages/Err404/Err404Page";
+import UserReportsList from "./components/admin/main/soloUser/UserReportsList";
 
 function App() {
   return (
@@ -73,6 +74,7 @@ function App() {
                 <Route element={<AdminLayout/>}>
                   <Route index element={<UsersTab />} />
                   <Route path="user/:userId" element={<UserDetails />} />
+                  <Route path="user/reports/:userId" element={<UserReportsList/>} />
                   <Route path="reports" element={<ReportList />} />
                   <Route path="reports/posts" element={<PostReportList />} />
                   <Route path="reports/posts/:reportId" element={<PostReportDetails />} />
