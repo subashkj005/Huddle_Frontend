@@ -13,6 +13,7 @@ import axiosInstance from "../../axios/axiosInstance";
 import { USERS_URL } from "../../constants/urls";
 import { toast as hottoast } from "react-hot-toast";
 import batchNumber from '../../hooks/useFetchRecommends'
+import useFetchRecommends from "../../hooks/useFetchRecommends";
 
 
 function UserSettings() {
@@ -20,7 +21,7 @@ function UserSettings() {
   const [gender, setGender] = useState("Female");
   const [age, setAge] = useState([18, 24]);
   const [distance, setDistance] = useState(10);
-  
+  const fetchData = useFetchRecommends()[11]
   const dropdownRef = useRef()
 
   const handleGenderChange = (e) => {
@@ -39,10 +40,11 @@ function UserSettings() {
     axiosInstance
       .post(`${USERS_URL}/update_settings/${userId}`, data)
       .then((res) => {
-        if (res.status == 200) {
+        if (res.status === 200) {
           hottoast.success("Settings updated");
           // reset the batch number to query the user from the beginning
           batchNumber.current = 1
+          fetchData()
 
         }
       })
@@ -84,7 +86,7 @@ function UserSettings() {
             />
           </div>
         </DropdownItem>
-        <DropdownItem className="p-1">
+        {/* <DropdownItem className="p-1">
           <div className="flex flex-col w-full max-w-md border p-1 rounded-lg">
             <Slider
               label="Near by"
@@ -97,11 +99,11 @@ function UserSettings() {
               onChangeEnd={setDistance}
             />
           </div>
-        </DropdownItem>
+        </DropdownItem> */}
         <DropdownItem className="p-1 hover: bg-none">
           <div className="flex flex-col w-full max-w-md border p-1 rounded-lg hover: bg-none">
             <ButtonGroup>
-              {gender == "Male" ? (
+              {gender === "Male" ? (
                 <Button color="danger" variant="flat">
                   Male
                 </Button>
@@ -115,7 +117,7 @@ function UserSettings() {
                   Male
                 </Button>
               )}
-              {gender == "Female" ? (
+              {gender === "Female" ? (
                 <Button color="danger" variant="flat">
                   Female
                 </Button>
@@ -129,7 +131,7 @@ function UserSettings() {
                   Female
                 </Button>
               )}
-              {gender == "Others" ? (
+              {gender === "Others" ? (
                 <Button color="danger" variant="flat">
                   Others
                 </Button>

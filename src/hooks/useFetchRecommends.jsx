@@ -45,36 +45,38 @@ function useFetchRecommends() {
     
   };
 
+  const fetchData = async () => {
+    try {
+      console.log("CALLING FETCH DATA FUNCTION")
+      setFetchCompleted(false)
+      const recommendations = await getRecommendations();
+      console.log('Data before =', data.length)
+      if(recommendations.length > 0){
+        console.log("Got recommendations")
+      }
+      setFetchCompleted(true)
+      
+      setData(recommendations);
+      setAccount(recommendations && recommendations[0]);
+      setAccountIndex(1)
+      setLoading(true)
+      console.log('Data After =', data.length)
+
+      if (recommendations?.length < 10){
+          setLimitReached(true)
+      }else{
+          setLimitReached(false)
+      }
+    } catch (error) {
+      console.error("Error fetching recommendations:", error);
+    } finally {
+      setLoading(false)
+    }
+  };
+
   useEffect(() => {
     socketConnection()
-    
-    const fetchData = async () => {
-      try {
-        setFetchCompleted(false)
-        const recommendations = await getRecommendations();
-        setFetchCompleted(true)
-
-        setData(recommendations);
-        setAccount(recommendations && recommendations[0]);
-        setAccountIndex(1)
-        setLoading(true)
-  
-        if (recommendations?.length < 10){
-            setLimitReached(true)
-        }else{
-            setLimitReached(false)
-        }
-      } catch (error) {
-        console.error("Error fetching recommendations:", error);
-      } finally {
-        setLoading(false)
-      }
-    };
-
     fetchData();
-    
-    
-
   },[]);
 
   return [
@@ -88,7 +90,9 @@ function useFetchRecommends() {
     setAccountIndex,
     loading,
     fetchMoreUsers,
-    fetchCompleted]
+    fetchCompleted,
+    fetchData
+  ]
 }
 
 export default useFetchRecommends;

@@ -4,7 +4,12 @@ import img from "../../../assets/front-image.jpg";
 import logo from "../../../assets/images/logo_png_hd-cropped.png";
 import { Link, useNavigate } from "react-router-dom";
 import { Alert } from "@mui/material";
-import { USERS_PUBLIC_URL, USERS_URL, CHAT_URL, POST_IMAGE_URL } from "../../../constants/urls";
+import {
+  USERS_PUBLIC_URL,
+  USERS_URL,
+  CHAT_URL,
+  POST_IMAGE_URL,
+} from "../../../constants/urls";
 import axiosInstance from "../../../axios/axiosInstance";
 import { LoadingContext } from "../../../context/LoadingContext";
 import { useDispatch } from "react-redux";
@@ -18,7 +23,7 @@ function LoginPage() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {handleFetch} = useContext(UserPictureContext)
+  const { handleFetch } = useContext(UserPictureContext);
   const { showLoading, hideLoading } = useContext(LoadingContext);
 
   const handleSubmit = (e) => {
@@ -53,7 +58,7 @@ function LoginPage() {
       })
       .finally(() => {
         hideLoading();
-        handleFetch()
+        handleFetch();
       });
 
     setErrorMessage("");
@@ -102,7 +107,17 @@ function LoginPage() {
               </div>
             </div>
           </div>
-          <div className="google-box"></div>
+          <div className="google-box">
+            <div>
+              <p className="font-medium">
+                Username:{" "}
+                <span className="font-normal">subashkj232@gmail.com</span>
+              </p>
+              <p className="font-medium">
+                Password: <span className="font-normal">subash@S123</span>
+              </p>
+            </div>
+          </div>
           {errorMessage && (
             <Alert onClose={() => setErrorMessage("")} severity="warning">
               {errorMessage}

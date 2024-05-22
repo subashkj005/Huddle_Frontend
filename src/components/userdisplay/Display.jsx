@@ -53,8 +53,6 @@ function Display() {
   let counter = 0; // Counter for slider
   let lastScrollTime = 0; // Carousel scrolltime
 
-  console.log('data = ', data)
-
   const handleSlideChange = (movement, liked_id = null, disliked_id = null) => {
     if (movement === "forward" && accountIndex < data?.length) {
       if (liked_id) {
@@ -157,7 +155,7 @@ function Display() {
         slideImage();
       }
     });
-  }, [counter]);
+  }, [counter, fetchCompleted]);
 
   return (
     <>
